@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda Solidária</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+</head>
+<body class="p-4">
+    <div id="root"></div>
+    <script type="text/babel">
+        function App() {
+            const [items, setItems] = React.useState([]);
+            React.useEffect(() => {
+                fetch('/items').then(r => r.json()).then(setItems);
+            }, []);
+            return (
+                <div>
+                    <h1 className="text-2xl mb-4">Itens Disponíveis</h1>
+                    <ul>
+                        {items.map(item => (
+                            <li key={item.id} className="border p-2 mb-2">
+                                <strong>{item.name}</strong>: {item.description} (x{item.quantity})
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
