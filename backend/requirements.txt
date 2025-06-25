@@ -1,0 +1,7 @@
+flask
+flask_sqlalchemy
+flask_bcrypt
+PyJWT
+pymysql
+Flask-Migrate
+reportlab
