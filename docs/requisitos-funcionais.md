@@ -1,22 +1,19 @@
-# Requisitos Funcionais - AjudaSolidária
+# Requisitos funcionais - AjudaSolidária
 
-1. **Cadastro de Usuários**
-   - Permitir o cadastro dos doadores, organizações sociais e beneficiários
+RF 01	**Cadastro de Usuário**	
+- permitir que Doador, beneficiário ou Organização se registrem com nome, contato e endereço.
 
-2. **Registro de Itens**
-   - Doadores devem poder cadastrar itens (nome, quantidade e o status)
+RF 02	**Login**	
+- autenticar usuário para acesso seguro às funções.
 
-3. **Solicitação de Ajuda**
-   - Beneficiários devem poder registrar pedidos de ajuda
+RF 03	**CRUD de itens**	
+- Doador pode criar, listar, atualizar status (Disponível/Reservado/Entregue) e excluir itens.
 
-4. **Listagem de Itens e Solicitações**
-   - Sistema deve exibir todos os itens disponíveis e solicitações pendentes
+RF 04	**CRUD de solicitações**	
+- Beneficiário registra, visualiza, edita ou exclui solicitações.
 
-5. **Atualização de Dados**
-   - Usuários devem poder editar suas informações e status dos itens
+RF 05	**Relatórios**	
+- gerar listagem de itens doados, solicitações atendidas e estatísticas por período.
 
-6. **Exclusão de Registros**
-   - Permitir remover itens entregues ou solicitações atendidas
-
-7. **Geração de Relatórios**
-   - Gerar relatórios estatísticos de doações e atendimentos
+RF 06	**Busca publica**	
+- qualquer visitante pode consultar itens disponíveis.

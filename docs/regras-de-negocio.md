@@ -2,10 +2,8 @@
 
 1. Cada doador só pode editar ou excluir os itens que ele cadastrou.
 
-2. Um item doado só pode ter status "Reservado" se houver uma solicitação aprovada para ele.
+2. Um mesmo item não pode estar simultaneamente com status “Disponível” e “Entregue”.
 
-3. Solicitações de ajuda só podem ser feitas por usuários do tipo "beneficiário".
+3. Solicitação só pode ser marcada “Atendida” se houver item compatível reservado ao beneficiário.
 
-4. Somente administradores ou representantes de organizações podem gerar relatórios estatísticos.
-
-5. Um beneficiário pode ter, no máximo, três solicitações pendentes ao mesmo tempo.
+4. Somente administradores ou  organizações podem gerar relatórios estatísticos.

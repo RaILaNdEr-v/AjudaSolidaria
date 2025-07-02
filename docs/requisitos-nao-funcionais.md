@@ -1,17 +1,20 @@
-# Requisitos Não Funcionais - AjudaSolidária
+# Requisitos não funcionais - AjudaSolidária
 
-1. **Desempenho**
-   - O sistema deve carregar páginas em até 2 segundos com conexão padrão.
+RNF 01	**Usabilidade**	
+- Interfaces responsivas e texto em linguagem simples.
 
-2. **Usabilidade**
-   - Interface deve ser simples, clara e acessível a pessoas com baixa familiaridade digital.
+RNF 02	**Desempenho**	
+- Listagem de itens em até 2 s para 1 000 registros.
 
-3. **Segurança**
-   - As senhas devem ser criptografadas.
-   - Acesso a dados deve ser autorizado por nível de permissão.
+RNF 03	**Segurança**	
+- Criptografar senhas com bcrypt; usar HTTPS no deploy.
 
-4. **Compatibilidade**
-   - O sistema deve funcionar em navegadores modernos (Chrome, Firefox, Edge).
+RNF 04	**Portabilidade**	
+- Backend deve rodar em container Docker.
 
-5. **Disponibilidade**
-   - O sistema deve estar disponível 95% do tempo em ambiente de produção.
+RNF 05	**Manutenibilidade**	
+- Código comentado e seguindo PEP 8 / PSR-12.
+
+
+RNF 06	**Conformidade**	
+- Atender LGPD nos dados de usuários brasileiros.
