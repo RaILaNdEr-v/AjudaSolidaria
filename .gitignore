@@ -1,0 +1,28 @@
+# Dependências do Node.js
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ambiente
+.env
+.env.*
+
+# Diretórios do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos do XAMPP
+*.bak
+*.tmp
+
+# Produção
+/dist/
+/build/
+
+# Outros
+*.log
+.idea/
+.vscode/ 

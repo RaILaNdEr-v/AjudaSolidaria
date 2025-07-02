@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda Solidária - Plataforma de Doações</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/backend.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Ajuda Solidária</div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showSection('home')">Início</a></li>
+                    <li><a href="#" onclick="showSection('items')">Itens</a></li>
+                    <li><a href="#" onclick="showSection('requests')">Solicitações</a></li>
+                    <li><a href="#" onclick="showSection('events')">Eventos</a></li>
+                    <li><a href="#" onclick="showSection('reports')">Relatórios</a></li>
+                </ul>
+                <div class="user-info">
+                    <div id="loginSection">
+                        <button class="btn btn-secondary" onclick="showLogin()">Entrar</button>
+                        <button class="btn btn-primary" onclick="showRegister()">Cadastrar</button>
+                    </div>
+                    <div id="userSection" class="hidden">
+                        <div class="user-profile">
+                            <div class="user-avatar" id="userAvatar">U</div>
+                            <span id="userName">Usuário</span>
+                            <button class="btn btn-secondary" onclick="logout()" style="margin-left: 1rem;">Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- sessao home -->
+            <div id="homeSection" class="section active">
+                <div class="welcome">
+                    <h1>Bem-vindo ao Ajuda Solidária</h1>
+                    <p>Conectamos doadores, beneficiários e organizações para promover ações solidárias e transformar vidas através da tecnologia.</p>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalItems">0</span>
+                            <span class="stat-label">Itens Cadastrados</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalDonations">0</span>
+                            <span class="stat-label">Doações Realizadas</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalRequests">0</span>
+                            <span class="stat-label">Solicitações Atendidas</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalUsers">0</span>
+                            <span class="stat-label">Usuários Registrados</span>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature-card">
+                            <div class="feature-icon">📦</div>
+                            <h3>Doe Itens</h3>
+                            <p>Doadores podem cadastrar itens para doação com fotos e descrições.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🙏</div>
+                            <h3>Solicite Ajuda</h3>
+                            <p>Beneficiários podem solicitar itens específicos de acordo com suas necessidades.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>Participe de Eventos</h3>
+                            <p>Organizações criam campanhas e eventos para arrecadação de doações.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Acompanhe Impacto</h3>
+                            <p>Relatórios detalhados mostram o impacto das doações na comunidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- secao de itens -->
+            <div id="itemsSection" class="section">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2>Itens para Doação</h2>
+                        <div>
+                            <input type="text" id="searchItems" placeholder="Buscar itens..." class="form-control" style="width: 250px; display: inline-block; margin-right: 1rem;">
+                            <button class="btn btn-primary" onclick="showAddItem()" id="addItemBtn" style="display: none;">Adicionar Item</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid" id="itemsGrid">
+                        <!-- os itens vao carregar aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- sessao de requests -->
+            <div id="requestsSection" class="section">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2>Solicitações de Ajuda</h2>
+                        <button class="btn btn-primary" onclick="showAddRequest()" id="addRequestBtn" style="display: none;">Nova Solicitação</button>
+                    </div>
+                    
+                    <div class="grid" id="requestsGrid">
+                        <!-- Requests will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- sessao de eventos -->
+            <div id="eventsSection" class="section">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2>Eventos e Campanhas</h2>
+                        <button class="btn btn-primary" onclick="showAddEvent()" id="addEventBtn" style="display: none;">Novo Evento</button>
+                    </div>
+                    
+                    <div class="grid" id="eventsGrid">
+                        <!-- Events will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- sessao de relatorios -->
+            <div id="reportsSection" class="section">
+                <div class="card">
+                    <h2>Relatórios e Estatísticas</h2>
+                   
+                    
+                    <div class="form-row" style="margin: 2rem 0;">
+                        <div class="form-group">
+                            <label>Data Inicial</label>
+                            <input type="date" id="reportStartDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Data Final</label>
+                            <input type="date" id="reportEndDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Relatório</label>
+                            <select id="reportType" class="form-control">
+                                <option value="general">Relatório Geral</option>
+                                <option value="impact">Relatório de Impacto</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="btn btn-primary" onclick="generateReport()">Gerar Relatório</button>
+                        <button class="btn btn-success" onclick="downloadPDFReport()">Download PDF</button>
+                    </div>
+                    
+                    <div id="reportResults" style="margin-top: 2rem;">
+                        <!-- Resultados dos relatórios serão exibidos aqui -->
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- modal login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Entrar na Plataforma</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- modal registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Cadastrar Nova Conta</h2>
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" id="registerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" id="registerPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Usuário</label>
+                        <select id="registerType" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="doador">Doador</option>
+                            <option value="beneficiario">Beneficiário</option>
+                            <option value="organizacao">Organização</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <input type="text" id="registerAddress" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="registerPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- modal de adicao de itens -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addItemModal')">&times;</span>
+            <h2>Cadastrar Novo Item</h2>
+            <form id="addItemForm">
+                <div class="form-group">
+                    <label>Nome do Item</label>
+                    <input type="text" id="itemName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="itemDescription" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" id="itemQuantity" class="form-control" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="itemCategory" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="roupas">Roupas</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="moveis">Móveis</option>
+                            <option value="eletronicos">Eletrônicos</option>
+                            <option value="livros">Livros</option>
+                            <option value="brinquedos">Brinquedos</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Request Modal -->
+    <div id="addRequestModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addRequestModal')">&times;</span>
+            <h2>Nova Solicitação de Ajuda</h2>
+            <form id="addRequestForm">
+                <div class="form-group">
+                    <label>Título da Solicitação</label>
+                    <input type="text" id="requestTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição Detalhada</label>
+                    <textarea id="requestDescription" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="requestCategory" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="roupas">Roupas</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="moveis">Móveis</option>
+                            <option value="eletronicos">Eletrônicos</option>
+                            <option value="livros">Livros</option>
+                            <option value="brinquedos">Brinquedos</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Urgência</label>
+                        <select id="requestUrgency" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="baixa">Baixa</option>
+                            <option value="media">Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div id="addEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addEventModal')">&times;</span>
+            <h2>Novo Evento/Campanha</h2>
+            <form id="addEventForm">
+                <div class="form-group">
+                    <label>Título do Evento</label>
+                    <input type="text" id="eventTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="eventDescription" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data de Início</label>
+                        <input type="date" id="eventStartDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Fim</label>
+                        <input type="date" id="eventEndDate" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Meta de Valor (R$)</label>
+                        <input type="number" id="eventGoalAmount" class="form-control" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Meta de Itens</label>
+                        <input type="number" id="eventGoalItems" class="form-control" min="0">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Criar Evento</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donate to Event Modal -->
+    <div id="donateEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('donateEventModal')">&times;</span>
+            <h2>Fazer Doação para Evento</h2>
+            <form id="donateEventForm">
+                <div class="form-group">
+                    <label>Valor da Doação (R$)</label>
+                    <input type="number" id="donationAmount" class="form-control" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Descrição dos Itens (opcional)</label>
+                    <textarea id="donationItems" class="form-control" rows="3" placeholder="Descreva os itens que está doando..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Fazer Doação</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
